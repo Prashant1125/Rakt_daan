@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Rakt Daan</string>
+    <string name="facebook_app_id">991554153033642</string>
+    <string name="facebook_client_token">f9fd6b863e805429c23c372636d2b756</string>
+    <string name="fb_login_protocol_scheme">fb991554153033642</string>
+</resources>

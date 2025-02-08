@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "40532256969",
+    "firebase_url": "https://rakt-daan-1e61a-default-rtdb.firebaseio.com",
+    "project_id": "rakt-daan-1e61a",
+    "storage_bucket": "rakt-daan-1e61a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:40532256969:android:5693133b047b95a691c518",
+        "android_client_info": {
+          "package_name": "com.pk.rakt_daan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "40532256969-pekqmh94khjlf9jr8t5l7ot69828d180.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pk.rakt_daan",
+            "certificate_hash": "ff97d93e6c08af4521fdea43762b643fd16e21d8"
+          }
+        },
+        {
+          "client_id": "40532256969-e55junt2c5o7ab9h5ade1tnv6csmple4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmUmJT0LuehPGA1jZxb9hefYxbJ2Hz124"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "40532256969-e55junt2c5o7ab9h5ade1tnv6csmple4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
