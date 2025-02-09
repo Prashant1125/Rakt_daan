@@ -25,7 +25,7 @@ class ExpandedDropdownController extends GetxController {
     buttonStates[option] = true;
 
     roleSelected.value = option;
-    print(roleSelected);
+    // print(roleSelected);
     // print(buttonStates);
   }
 

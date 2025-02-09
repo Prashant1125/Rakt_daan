@@ -40,7 +40,7 @@ class AuthService {
         "photoURL": user.photoURL,
         "uid": user.uid,
       });
-      Get.offAllNamed(AppRoutes.home);
+      Get.offAllNamed(AppRoutes.accountCreation);
     }
   }
 
@@ -73,8 +73,22 @@ class AuthService {
         "photoURL": user.photoURL,
         "uid": user.uid,
       });
-      Get.offAllNamed(AppRoutes.home);
+      Get.offAllNamed(AppRoutes.accountCreation);
     }
+  }
+
+  // 🔹 Get User Data from Firebase
+  Future<Map<String, dynamic>?> getUser() async {
+    String? uid = _auth.currentUser?.uid;
+    if (uid == null) return null;
+
+    DatabaseReference ref = fdb.ref('users/$uid');
+    DataSnapshot snapshot = await ref.get();
+
+    if (snapshot.exists && snapshot.value is Map) {
+      return Map<String, dynamic>.from(snapshot.value as Map);
+    }
+    return null;
   }
 
   // Sign Out Function

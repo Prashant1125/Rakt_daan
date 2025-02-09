@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rakt_daan/api/google_sign_in.dart';
 import 'package:rakt_daan/components/buttons/primary_button.dart';
 import 'package:rakt_daan/components/selection%20input%20field/custom_dropdown.dart';
 import 'package:rakt_daan/components/selection%20input%20field/date_input.dart';
@@ -9,38 +10,55 @@ import 'package:rakt_daan/components/textfields/contact_input.dart';
 import 'package:rakt_daan/components/textfields/pin_input.dart';
 import 'package:rakt_daan/components/textfields/text_input_field.dart';
 import 'package:rakt_daan/controllers/selection%20input%20controller/custom_dropdown_contoller.dart';
+import 'package:rakt_daan/controllers/selection%20input%20controller/date_input_controller.dart';
+import 'package:rakt_daan/controllers/selection%20input%20controller/location_input_controller.dart';
 import 'package:rakt_daan/controllers/selection%20input%20controller/redio_button_controller.dart';
 import 'package:rakt_daan/utils/colors.dart';
 import 'package:rakt_daan/utils/image_const.dart';
 
-class AccountCreation extends StatelessWidget {
+class AccountCreation extends StatefulWidget {
   const AccountCreation({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    List<String> bloodGroups = [
-      'A+',
-      'A-',
-      'B+',
-      'B-',
-      'AB+',
-      'AB-',
-      'O+',
-      'O-',
-    ];
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController nameController = TextEditingController();
-    final TextEditingController phoneController = TextEditingController();
-    final TextEditingController stateController = TextEditingController();
-    final TextEditingController cityController = TextEditingController();
-    final TextEditingController countryController = TextEditingController();
-    final TextEditingController pinController = TextEditingController();
-    final MembershipTypeRadioController genderController =
-        Get.put(MembershipTypeRadioController());
-    final ExpandedDropdownController dropdownController =
-        Get.put(ExpandedDropdownController());
-    bool isPphoneError = false;
+  State<AccountCreation> createState() => _AccountCreationState();
+}
 
+class _AccountCreationState extends State<AccountCreation> {
+  List<String> bloodGroups = [
+    'A+',
+    'A-',
+    'B+',
+    'B-',
+    'AB+',
+    'AB-',
+    'O+',
+    'O-',
+  ];
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController stateController = TextEditingController();
+  final TextEditingController cityController = TextEditingController();
+  final TextEditingController countryController = TextEditingController();
+  final TextEditingController pinController = TextEditingController();
+  final MembershipTypeRadioController genderController =
+      Get.put(MembershipTypeRadioController());
+  final ExpandedDropdownController dropdownController =
+      Get.put(ExpandedDropdownController());
+  final DateInputController datecontroller = Get.put(DateInputController());
+  final LocationInputController locationInputController =
+      Get.put(LocationInputController());
+
+  bool isPphoneError = false;
+
+  @override
+  void initState() {
+    setData();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorConst.darkGrey.withAlpha((0.5 * 255).round()),
       body: SafeArea(
@@ -105,6 +123,9 @@ class AccountCreation extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             TextInputField(
+                                validator: (value) {
+                                  return null;
+                                },
                                 title: 'Name',
                                 enabled: true,
                                 textEditingController: nameController,
@@ -114,6 +135,9 @@ class AccountCreation extends StatelessWidget {
                               height: 14,
                             ),
                             TextInputField(
+                                validator: (value) {
+                                  return null;
+                                },
                                 title: 'Email Id',
                                 enabled: true,
                                 textEditingController: emailController,
@@ -124,13 +148,10 @@ class AccountCreation extends StatelessWidget {
                             ),
                             ContactInputField(
                               validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return;
-                                }
                                 return null;
                               },
                               textEditingController: phoneController,
-                              hintText: '',
+                              hintText: 'XXXXX-XXXXX',
                               uniqueTextInputFieldId: "Manager_Contact",
                               isEmpty: isPphoneError,
                               width: Get.width * 0.975,
@@ -139,13 +160,10 @@ class AccountCreation extends StatelessWidget {
                             const SizedBox(height: 14.0),
                             DateInputField(
                                 validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return;
-                                  }
                                   return null;
                                 },
                                 uniqueTextInputFieldId: 'Date',
-                                hintText: 'DD-MM-YYYY',
+                                hintText: 'Age should be 18+ DD-MM-YY',
                                 isEmpty: false.obs,
                                 enabled: true,
                                 width: Get.height * 0.975),
@@ -163,6 +181,9 @@ class AccountCreation extends StatelessWidget {
                               height: 14,
                             ),
                             CustomExpandedDropdown(
+                              validator: (value) {
+                                return null;
+                              },
                               title: 'What is your Blood group?',
                               controller: dropdownController,
                               buttonWidth: 20,
@@ -172,7 +193,11 @@ class AccountCreation extends StatelessWidget {
                             ),
                             const SizedBox(height: 14.0),
                             LocationInputField(
-                              hintText: "Enter your colony of locality",
+                              validator: (value) {
+                                return null;
+                              },
+                              hintText:
+                                  "Enter or select your colony of locality",
                             ),
                             const SizedBox(height: 14.0),
                             Row(
@@ -181,9 +206,6 @@ class AccountCreation extends StatelessWidget {
                                 TextInputField(
                                   title: 'City',
                                   validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return;
-                                    }
                                     return null;
                                   },
                                   enabled: true,
@@ -195,9 +217,6 @@ class AccountCreation extends StatelessWidget {
                                 TextInputField(
                                   title: 'State',
                                   validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return;
-                                    }
                                     return null;
                                   },
                                   enabled: true,
@@ -217,9 +236,6 @@ class AccountCreation extends StatelessWidget {
                                 TextInputField(
                                   title: 'Country',
                                   validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return;
-                                    }
                                     return null;
                                   },
                                   enabled: true,
@@ -230,9 +246,6 @@ class AccountCreation extends StatelessWidget {
                                 ),
                                 PinInputField(
                                   validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return;
-                                    }
                                     return null;
                                   },
                                   textEditingController: pinController,
@@ -251,7 +264,37 @@ class AccountCreation extends StatelessWidget {
                                 buttonWidth: Get.width * .9,
                                 buttonHeight: 50,
                                 buttonText: 'Submit',
-                                onTap: () {},
+                                onTap: () {
+                                  if (emailController.text.isNotEmpty &&
+                                      nameController.text.isNotEmpty &&
+                                      phoneController.text.isNotEmpty &&
+                                      datecontroller.textEditingController.text
+                                          .isNotEmpty &&
+                                      dropdownController
+                                          .roleSelected.isNotEmpty &&
+                                      locationInputController
+                                          .textEditingController
+                                          .text
+                                          .isNotEmpty &&
+                                      cityController.text.isNotEmpty &&
+                                      stateController.text.isNotEmpty &&
+                                      countryController.text.isNotEmpty &&
+                                      pinController.text.isNotEmpty) {
+                                    Get.snackbar(
+                                        'Success', 'Form Submit Successfully',
+                                        backgroundColor: ColorConst
+                                            .sparentOverlay
+                                            .withAlpha((.5 * 255).round()),
+                                        colorText: ColorConst.primaryGreen);
+                                  } else {
+                                    Get.snackbar(
+                                        'Error', 'Please fill all the fields',
+                                        backgroundColor: ColorConst
+                                            .sparentOverlay
+                                            .withAlpha((.5 * 255).round()),
+                                        colorText: ColorConst.primaryGreen);
+                                  }
+                                },
                                 isEnabled: true)
                           ],
                         ),
@@ -265,5 +308,25 @@ class AccountCreation extends StatelessWidget {
         ),
       ),
     );
+  }
+
+// for picked a autofilled values by login
+  void setData() async {
+    var userData = await AuthService().getUser(); // Firebase से डेटा लाना
+
+    if (userData != null) {
+      phoneController.text = userData["phoneNumber"] ?? "";
+      emailController.text = userData["email"] ?? "";
+      nameController.text = userData["name"] ?? "";
+      datecontroller.textEditingController.text = userData["dob"] ?? "";
+      locationInputController.textEditingController.text =
+          userData["location"] ?? "";
+      genderController.selectedItem.value = userData["gender"] ?? "";
+      cityController.text = userData["city"] ?? "";
+      stateController.text = userData["state"] ?? "";
+      countryController.text = userData["country"] ?? "";
+      pinController.text = userData["pinCode"] ?? "";
+      dropdownController.roleSelected = userData["blood"] ?? "";
+    }
   }
 }

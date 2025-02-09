@@ -143,7 +143,8 @@ class LoginScreen extends StatelessWidget {
                                             .withAlpha((.5 * 255).round()),
                                         colorText: ColorConst.primaryGreen);
                                     if ((value.user != null)) {
-                                      Get.offAllNamed(AppRoutes.home);
+                                      Get.offAllNamed(
+                                          AppRoutes.accountCreation);
                                     } else {
                                       Get.snackbar('Value', value.toString(),
                                           backgroundColor: ColorConst

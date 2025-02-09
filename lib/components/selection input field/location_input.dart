@@ -8,11 +8,12 @@ class LocationInputField extends StatelessWidget {
 
   final String hintText;
   final TextStyle? hintStyle;
-
+  final String? Function(String?)? validator;
   LocationInputField({
     super.key,
     required this.hintText,
     this.hintStyle,
+    this.validator,
   });
 
   @override
@@ -34,7 +35,8 @@ class LocationInputField extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        TextField(
+        TextFormField(
+          validator: validator,
           controller: controller.textEditingController,
           keyboardType: TextInputType.text,
           style: TextStyle(

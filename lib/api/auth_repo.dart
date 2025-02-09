@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:rakt_daan/models/user_data.dart';
 
 class AuthRepo {
   static FirebaseAuth auth = FirebaseAuth.instance;
@@ -35,5 +36,20 @@ class AuthRepo {
     } catch (e) {
       throw Exception(e);
     }
+  }
+
+  Future<void> saveUserData(UserDataModel user) async {
+    await fdb.ref("userInfo").child(user.uid).set(user.toJson());
+  }
+
+  // 🔹 यूजर डेटा प्राप्त करें
+  Future<UserDataModel?> getUserData(String uid) async {
+    DataSnapshot snapshot = await fdb.ref("userInfo").child(user.uid).get();
+
+    if (snapshot.exists && snapshot.value is Map) {
+      return UserDataModel.fromJson(
+          Map<String, dynamic>.from(snapshot.value as Map));
+    }
+    return null;
   }
 }
