@@ -1,9 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rakt_daan/api/auth_repo.dart';
 import 'package:rakt_daan/components/appbar/custom_appbar.dart';
 import 'package:rakt_daan/components/buttons/primary_button.dart';
+import 'package:rakt_daan/components/progress%20indicator/custom_indicator.dart';
 import 'package:rakt_daan/components/textfields/text_input_field.dart';
 import 'package:rakt_daan/controllers/text_input_field_controller.dart';
 import 'package:rakt_daan/routes/routes.dart';
@@ -151,6 +154,9 @@ class SignUpScreen extends StatelessWidget {
                                   if (emailController.text.isNotEmpty &&
                                       nameController.text.isNotEmpty &&
                                       pwdController.text.isNotEmpty) {
+                                    LoadingDialog.show(
+                                        context); // 🔹 Show Loading Dialog
+// for sign up
                                     AuthRepo.signup(
                                             emailController.text,
                                             pwdController.text,
@@ -159,6 +165,8 @@ class SignUpScreen extends StatelessWidget {
                                       AuthRepo.auth.currentUser
                                           ?.updateDisplayName(
                                               nameController.text);
+                                      LoadingDialog.hide(
+                                          context); // 🔹 Hide Loading Dialog
                                       Get.snackbar('Success',
                                           'Account Created successfully',
                                           backgroundColor: ColorConst
@@ -167,6 +175,8 @@ class SignUpScreen extends StatelessWidget {
                                           colorText: ColorConst.primaryGreen);
                                       Get.offAllNamed(AppRoutes.login);
                                     }).onError((error, stackTrace) {
+                                      LoadingDialog.hide(
+                                          context); // 🔹 Hide Loading Dialog
                                       if (error is FirebaseAuthException) {
                                         Get.snackbar(
                                             'Error', error.message.toString(),

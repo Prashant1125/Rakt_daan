@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:rakt_daan/api/auth_repo.dart';
 import 'package:rakt_daan/api/google_sign_in.dart';
 import 'package:rakt_daan/components/buttons/primary_button.dart';
+import 'package:rakt_daan/components/progress%20indicator/custom_indicator.dart';
 import 'package:rakt_daan/components/selection%20input%20field/custom_dropdown.dart';
 import 'package:rakt_daan/components/selection%20input%20field/date_input.dart';
 import 'package:rakt_daan/components/selection%20input%20field/location_input.dart';
@@ -283,7 +284,11 @@ class _AccountCreationState extends State<AccountCreation> {
                                       stateController.text.isNotEmpty &&
                                       countryController.text.isNotEmpty &&
                                       pinController.text.isNotEmpty) {
+                                    //for showing a indicator
+                                    LoadingDialog.show(context);
+
                                     // for model
+
                                     UserDataModel userDataModel = UserDataModel(
                                         uid: AuthRepo.user.uid,
                                         name: nameController.text,
@@ -301,6 +306,9 @@ class _AccountCreationState extends State<AccountCreation> {
                                             .roleSelected.value,
                                         location: locationInputController
                                             .textEditingController.text);
+// for hide the indicator
+                                    LoadingDialog.hide(context);
+
                                     await AuthRepo()
                                         .saveUserData(userDataModel);
                                     // for navigate to Home Screen
