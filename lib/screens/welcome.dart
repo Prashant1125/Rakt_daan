@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rakt_daan/api/auth_repo.dart';
 import 'package:rakt_daan/api/google_sign_in.dart';
 import 'package:rakt_daan/components/buttons/secondary_button.dart';
 import 'package:rakt_daan/components/buttons/sign_in_container.dart';
+import 'package:rakt_daan/models/user_data.dart';
 import 'package:rakt_daan/routes/routes.dart';
 import 'package:rakt_daan/utils/colors.dart';
 import 'package:rakt_daan/utils/image_const.dart';
@@ -197,5 +200,32 @@ class WelcomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void checkUserAndNavigate() async {
+    String? uid = FirebaseAuth
+        .instance.currentUser?.uid; // 🔹 लॉगिन किया हुआ यूजर का UID लें
+
+    if (uid == null) {
+      Get.snackbar("Error", "User not logged in",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+      return;
+    }
+
+    UserDataModel? user =
+        await AuthRepo().getUserData(uid); // 🔹 Firebase से डेटा चेक करें
+
+    if (user != null) {
+      // ✅ यूजर का डेटा मिल गया, डायरेक्ट होमपेज पर भेजें
+      Get.offAllNamed(AppRoutes.home);
+    } else {
+      // ❌ यूजर का डेटा नहीं मिला, फॉर्म दिखाएँ
+      Get.snackbar("Info", "User data not found, please sign up",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.orange,
+          colorText: Colors.white);
+    }
   }
 }

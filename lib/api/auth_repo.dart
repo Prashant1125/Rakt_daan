@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:rakt_daan/models/user_data.dart';
+import 'package:rakt_daan/routes/routes.dart';
 
 class AuthRepo {
   static FirebaseAuth auth = FirebaseAuth.instance;
@@ -51,5 +54,25 @@ class AuthRepo {
           Map<String, dynamic>.from(snapshot.value as Map));
     }
     return null;
+  }
+
+  static Future<void> checkUserAndNavigate() async {
+    String? uid = auth.currentUser?.uid;
+
+    if (uid == null) {
+      Get.snackbar("Error", "User not logged in",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+      return;
+    }
+
+    DataSnapshot snapshot = await fdb.ref("userInfo").child(uid).get();
+
+    if (snapshot.exists) {
+      Get.offAllNamed(AppRoutes.home);
+    } else {
+      Get.offAllNamed(AppRoutes.accountCreation);
+    }
   }
 }

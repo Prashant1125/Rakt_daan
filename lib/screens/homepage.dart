@@ -27,7 +27,7 @@ class Homepage extends StatelessWidget {
             PrimaryButton(
                 buttonWidth: Get.width * .5,
                 buttonHeight: 50,
-                buttonText: 'GoogleSignout',
+                buttonText: 'Log Out',
                 onTap: () {
                   AuthService().signOut().then((value) {
                     AuthRepo.auth = FirebaseAuth.instance;

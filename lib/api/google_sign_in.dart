@@ -1,16 +1,21 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:rakt_daan/api/auth_repo.dart';
-import 'package:rakt_daan/routes/routes.dart';
+import 'package:rakt_daan/components/progress%20indicator/custom_indicator.dart';
+import 'package:rakt_daan/utils/colors.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseDatabase fdb = FirebaseDatabase.instance;
 
   final GoogleSignIn googleSignIn = GoogleSignIn();
+  bool isLoading = false; // 🔹 लोडिंग स्टेट ट्रैक करने के लिए
 
   // 🔹 Google Sign-In
   Future<User?> signInWithGoogle() async {
@@ -29,22 +34,40 @@ class AuthService {
     return userCredential.user;
   }
 
-// Google sign button to store data in firebase database
-  googleSignInButton(context) async {
-    User? user = await signInWithGoogle();
-    if (user != null) {
-      fdb.ref("users").child(user.uid).set({
-        "name": user.displayName,
-        "email": user.email,
-        "phoneNumber": user.phoneNumber,
-        "photoURL": user.photoURL,
-        "uid": user.uid,
-      });
-      Get.offAllNamed(AppRoutes.accountCreation);
+  // 🔹 Google Sign-In Button
+  googleSignInButton(BuildContext context) async {
+    try {
+      LoadingDialog.show(context);
+
+      User? user = await signInWithGoogle();
+      if (user != null) {
+        await fdb.ref("users").child(user.uid).set({
+          "name": user.displayName,
+          "email": user.email,
+          "phoneNumber": user.phoneNumber ?? "",
+          "photoURL": user.photoURL ?? "",
+          "uid": user.uid,
+        });
+
+        LoadingDialog.hide(context);
+        await AuthRepo.checkUserAndNavigate();
+      } else {
+        LoadingDialog.hide(context);
+        Get.snackbar('Error', 'Google login failed',
+            backgroundColor:
+                ColorConst.sparentOverlay.withAlpha((.5 * 255).round()),
+            colorText: ColorConst.primaryGreen);
+      }
+    } catch (e) {
+      LoadingDialog.hide(context);
+      Get.snackbar('Error', e.toString(),
+          backgroundColor:
+              ColorConst.sparentOverlay.withAlpha((.5 * 255).round()),
+          colorText: ColorConst.primaryGreen);
     }
   }
 
-// for facebook login
+  // 🔹 Facebook Login
   Future<User?> signInWithFacebook() async {
     final LoginResult result = await FacebookAuth.instance.login();
 
@@ -63,17 +86,36 @@ class AuthService {
     return null;
   }
 
-  facebookSignInButton(context) async {
-    User? user = await signInWithFacebook();
-    if (user != null) {
-      fdb.ref("users").child(user.uid).set({
-        "name": user.displayName,
-        "email": user.email,
-        "phoneNumber": user.phoneNumber,
-        "photoURL": user.photoURL,
-        "uid": user.uid,
-      });
-      Get.offAllNamed(AppRoutes.accountCreation);
+  // 🔹 Facebook Sign-In Button
+  facebookSignInButton(BuildContext context) async {
+    try {
+      LoadingDialog.show(context);
+
+      User? user = await signInWithFacebook();
+      if (user != null) {
+        await fdb.ref("users").child(user.uid).set({
+          "name": user.displayName,
+          "email": user.email,
+          "phoneNumber": user.phoneNumber ?? "",
+          "photoURL": user.photoURL ?? "",
+          "uid": user.uid,
+        });
+
+        LoadingDialog.hide(context);
+        await AuthRepo.checkUserAndNavigate();
+      } else {
+        LoadingDialog.hide(context);
+        Get.snackbar('Error', 'Facebook login failed',
+            backgroundColor:
+                ColorConst.sparentOverlay.withAlpha((.5 * 255).round()),
+            colorText: ColorConst.primaryGreen);
+      }
+    } catch (e) {
+      LoadingDialog.hide(context);
+      Get.snackbar('Error', e.toString(),
+          backgroundColor:
+              ColorConst.sparentOverlay.withAlpha((.5 * 255).round()),
+          colorText: ColorConst.primaryGreen);
     }
   }
 
@@ -91,7 +133,7 @@ class AuthService {
     return null;
   }
 
-  // Sign Out Function
+  // 🔹 Sign Out Function
   Future<void> signOut() async {
     await googleSignIn.signOut();
     await FacebookAuth.instance.logOut();

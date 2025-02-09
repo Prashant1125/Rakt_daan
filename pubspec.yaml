@@ -44,6 +44,7 @@ dependencies:
   geolocator: ^13.0.2
   geocoding: ^3.0.0
   intl: ^0.20.2
+  lottie: ^3.3.1
 
 dev_dependencies:
   flutter_test:
@@ -71,7 +72,7 @@ flutter:
   assets:
     - assets/
     - assets/images/
-
+    - assets/animation/blood_drop.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

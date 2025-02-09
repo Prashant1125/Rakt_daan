@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rakt_daan/api/auth_repo.dart';
 import 'package:rakt_daan/api/google_sign_in.dart';
 import 'package:rakt_daan/components/buttons/primary_button.dart';
 import 'package:rakt_daan/components/selection%20input%20field/custom_dropdown.dart';
@@ -13,6 +14,8 @@ import 'package:rakt_daan/controllers/selection%20input%20controller/custom_drop
 import 'package:rakt_daan/controllers/selection%20input%20controller/date_input_controller.dart';
 import 'package:rakt_daan/controllers/selection%20input%20controller/location_input_controller.dart';
 import 'package:rakt_daan/controllers/selection%20input%20controller/redio_button_controller.dart';
+import 'package:rakt_daan/models/user_data.dart';
+import 'package:rakt_daan/routes/routes.dart';
 import 'package:rakt_daan/utils/colors.dart';
 import 'package:rakt_daan/utils/image_const.dart';
 
@@ -264,7 +267,7 @@ class _AccountCreationState extends State<AccountCreation> {
                                 buttonWidth: Get.width * .9,
                                 buttonHeight: 50,
                                 buttonText: 'Submit',
-                                onTap: () {
+                                onTap: () async {
                                   if (emailController.text.isNotEmpty &&
                                       nameController.text.isNotEmpty &&
                                       phoneController.text.isNotEmpty &&
@@ -280,11 +283,33 @@ class _AccountCreationState extends State<AccountCreation> {
                                       stateController.text.isNotEmpty &&
                                       countryController.text.isNotEmpty &&
                                       pinController.text.isNotEmpty) {
-                                    Get.snackbar(
-                                        'Success', 'Form Submit Successfully',
-                                        backgroundColor: ColorConst
-                                            .sparentOverlay
-                                            .withAlpha((.5 * 255).round()),
+                                    // for model
+                                    UserDataModel userDataModel = UserDataModel(
+                                        uid: AuthRepo.user.uid,
+                                        name: nameController.text,
+                                        email: emailController.text,
+                                        phoneNumber: phoneController.text,
+                                        dob: datecontroller
+                                            .textEditingController.text,
+                                        gender:
+                                            genderController.selectedItem.value,
+                                        city: cityController.text,
+                                        state: stateController.text,
+                                        country: countryController.text,
+                                        pinCode: pinController.text,
+                                        bloodGroup: dropdownController
+                                            .roleSelected.value,
+                                        location: locationInputController
+                                            .textEditingController.text);
+                                    await AuthRepo()
+                                        .saveUserData(userDataModel);
+                                    // for navigate to Home Screen
+                                    Get.offAllNamed(AppRoutes.home);
+                                    // For showing a snakbar to successfull login
+                                    Get.snackbar("Success",
+                                        "User data saved successfully!",
+                                        backgroundColor:
+                                            ColorConst.sparentOverlay,
                                         colorText: ColorConst.primaryGreen);
                                   } else {
                                     Get.snackbar(
@@ -326,7 +351,7 @@ class _AccountCreationState extends State<AccountCreation> {
       stateController.text = userData["state"] ?? "";
       countryController.text = userData["country"] ?? "";
       pinController.text = userData["pinCode"] ?? "";
-      dropdownController.roleSelected = userData["blood"] ?? "";
+      dropdownController.roleSelected.value = userData["bloodGroup"] ?? "";
     }
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:rakt_daan/controllers/selection%20input%20controller/custom_dropdown_contoller.dart';
 import 'package:rakt_daan/utils/colors.dart';
@@ -12,7 +11,7 @@ class CustomExpandedDropdown extends StatefulWidget {
   final double buttonHeight;
   final List<String> listOfItems;
   final List<String> listOfItemsUniqueId;
-  final FormFieldValidator<String>? validator; // Validator जोड़ा गया
+  final FormFieldValidator<String>? validator;
 
   const CustomExpandedDropdown({
     super.key,

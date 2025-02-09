@@ -8,4 +8,5 @@ class ImageConst {
   static const String motiveQuote = 'assets/images/motive_quote.png';
   static const String radioSelected = 'assets/images/radio_selected.png';
   static const String radioUnSelected = 'assets/images/radio_unselected.png';
+  static const String loading = 'assets/animation/blood_drop.json';
 }

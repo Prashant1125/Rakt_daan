@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rakt_daan/firebase_options.dart';
 import 'package:rakt_daan/routes/routes.dart';
-import 'package:rakt_daan/screens/welcome.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,9 +20,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Rakt Daan',
       theme: ThemeData(textTheme: GoogleFonts.poppinsTextTheme()),
-      initialRoute: AppRoutes.welcome,
+      initialRoute: AppRoutes.splash,
       getPages: AppRoutes.routes,
-      home: WelcomeScreen(),
+      // home: WelcomeScreen(),
     );
   }
 }
