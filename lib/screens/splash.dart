@@ -28,7 +28,7 @@ class _SplaceScreenState extends State<SplaceScreen> {
   void getIsLogin() {
     Get.offAllNamed(
       FirebaseAuth.instance.currentUser != null
-          ? AppRoutes.home
+          ? AppRoutes.bottom
           : AppRoutes.welcome,
     );
   }

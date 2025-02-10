@@ -3,6 +3,7 @@ class UserDataModel {
   String? name;
   String? email;
   String? phoneNumber;
+  String? profilePicture;
   String? dob;
   String? gender;
   String? city;
@@ -14,26 +15,28 @@ class UserDataModel {
 
   UserDataModel({
     required this.uid,
-    required this.name,
-    required this.email,
-    required this.phoneNumber,
-    required this.dob,
-    required this.gender,
-    required this.city,
-    required this.state,
-    required this.country,
-    required this.pinCode,
-    required this.bloodGroup,
-    required this.location,
+    this.name,
+    this.email,
+    this.phoneNumber,
+    this.profilePicture,
+    this.dob,
+    this.gender,
+    this.city,
+    this.state,
+    this.country,
+    this.pinCode,
+    this.bloodGroup,
+    this.location,
   });
 
-  // 🔹 Firebase में डेटा सेव करने के लिए JSON में कन्वर्ट करना
+  // JSON में कन्वर्ट करना
   Map<String, dynamic> toJson() {
     return {
       "uid": uid,
       "name": name,
       "email": email,
       "phoneNumber": phoneNumber,
+      "profilePicture": profilePicture,
       "dob": dob,
       "gender": gender,
       "city": city,
@@ -45,21 +48,22 @@ class UserDataModel {
     };
   }
 
-  // 🔹 Firebase से डेटा लाने के लिए JSON को `UserModel` में कन्वर्ट करना
+  // JSON से UserDataModel में कन्वर्ट करना
   factory UserDataModel.fromJson(Map<String, dynamic> json) {
     return UserDataModel(
       uid: json["uid"] ?? "",
-      name: json["name"] ?? "",
-      email: json["email"] ?? "",
-      phoneNumber: json["phoneNumber"] ?? "",
-      dob: json["dob"] ?? "",
-      gender: json["gender"] ?? "",
-      city: json["city"] ?? "",
-      state: json["state"] ?? "",
-      country: json["country"] ?? "",
-      pinCode: json["pinCode"] ?? "",
-      bloodGroup: json["bloodGroup"] ?? "",
-      location: json["location"] ?? "",
+      name: json["name"],
+      email: json["email"],
+      phoneNumber: json["phoneNumber"],
+      profilePicture: json["profilePicture"],
+      dob: json["dob"],
+      gender: json["gender"],
+      city: json["city"],
+      state: json["state"],
+      country: json["country"],
+      pinCode: json["pinCode"],
+      bloodGroup: json["bloodGroup"],
+      location: json["location"],
     );
   }
 }

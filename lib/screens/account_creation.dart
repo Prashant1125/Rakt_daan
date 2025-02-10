@@ -291,6 +291,7 @@ class _AccountCreationState extends State<AccountCreation> {
 
                                     UserDataModel userDataModel = UserDataModel(
                                         uid: AuthRepo.user.uid,
+                                        profilePicture: AuthRepo.user.photoURL,
                                         name: nameController.text,
                                         email: emailController.text,
                                         phoneNumber: phoneController.text,
@@ -312,7 +313,7 @@ class _AccountCreationState extends State<AccountCreation> {
                                     await AuthRepo()
                                         .saveUserData(userDataModel);
                                     // for navigate to Home Screen
-                                    Get.offAllNamed(AppRoutes.home);
+                                    Get.offAllNamed(AppRoutes.bottom);
                                     // For showing a snakbar to successfull login
                                     Get.snackbar("Success",
                                         "User data saved successfully!",

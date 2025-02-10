@@ -70,7 +70,7 @@ class AuthRepo {
     DataSnapshot snapshot = await fdb.ref("userInfo").child(uid).get();
 
     if (snapshot.exists) {
-      Get.offAllNamed(AppRoutes.home);
+      Get.offAllNamed(AppRoutes.bottom);
     } else {
       Get.offAllNamed(AppRoutes.accountCreation);
     }

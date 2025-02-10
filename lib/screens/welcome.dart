@@ -219,7 +219,7 @@ class WelcomeScreen extends StatelessWidget {
 
     if (user != null) {
       // ✅ यूजर का डेटा मिल गया, डायरेक्ट होमपेज पर भेजें
-      Get.offAllNamed(AppRoutes.home);
+      Get.offAllNamed(AppRoutes.bottom);
     } else {
       // ❌ यूजर का डेटा नहीं मिला, फॉर्म दिखाएँ
       Get.snackbar("Info", "User data not found, please sign up",

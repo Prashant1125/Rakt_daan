@@ -27,7 +27,7 @@ class SignUpScreen extends StatelessWidget {
     TextInputFieldController controller = Get.put(TextInputFieldController());
     return Scaffold(
       appBar: CustomAppbar(
-        leadingIcon: true,
+        defaultLeadingIcon: true,
         title: 'Sign Up Screen',
         traillingIcon: false,
       ),

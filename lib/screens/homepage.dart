@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rakt_daan/api/auth_repo.dart';
 import 'package:rakt_daan/api/google_sign_in.dart';
-import 'package:rakt_daan/components/appbar/custom_appbar.dart';
 import 'package:rakt_daan/components/buttons/primary_button.dart';
 import 'package:rakt_daan/routes/routes.dart';
 import 'package:rakt_daan/utils/colors.dart';
@@ -14,12 +13,6 @@ class Homepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppbar(
-        traillingIcon: true,
-        leadingicon: Icons.home,
-        title: 'HomePage',
-        leadingIcon: false,
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

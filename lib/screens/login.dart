@@ -24,7 +24,7 @@ class LoginScreen extends StatelessWidget {
     TextInputFieldController controller = Get.put(TextInputFieldController());
     return Scaffold(
       appBar: CustomAppbar(
-        leadingIcon: true,
+        defaultLeadingIcon: true,
         title: 'Login Screen',
         traillingIcon: false,
       ),
@@ -163,7 +163,6 @@ class LoginScreen extends StatelessWidget {
                                   }).onError((error, stackTrace) {
                                     LoadingDialog.hide(
                                         context); // 🔹 Hide Loading Dialog on Error
-
                                     if (error is FirebaseAuthException) {
                                       Get.snackbar(
                                           'Error', error.message.toString(),
