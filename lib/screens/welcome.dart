@@ -214,8 +214,10 @@ class WelcomeScreen extends StatelessWidget {
       return;
     }
 
+    Map<String, dynamic>? userDataMap =
+        await AuthRepo().getUserData(AuthRepo.user.uid);
     UserDataModel? user =
-        await AuthRepo().getUserData(uid); // 🔹 Firebase से डेटा चेक करें
+        userDataMap != null ? UserDataModel.fromMap(userDataMap) : null;
 
     if (user != null) {
       // ✅ यूजर का डेटा मिल गया, डायरेक्ट होमपेज पर भेजें

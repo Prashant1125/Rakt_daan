@@ -34,7 +34,7 @@ class ContactUs extends StatelessWidget {
               Align(
                   alignment: Alignment.center,
                   child: Image.asset(
-                    ImageConst.contact_bg,
+                    ImageConst.contactBg,
                     scale: 10,
                   )),
               SizedBox(

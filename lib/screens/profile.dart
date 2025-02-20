@@ -34,9 +34,15 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> loadUserData() async {
-    UserDataModel? user = await AuthRepo().getUserData(widget.uid);
+    Map<String, dynamic>? userDataMap =
+        await AuthRepo().getUserData(widget.uid);
+
+    // Convert the Map<String, dynamic>? to UserDataModel?
+    UserDataModel? user =
+        userDataMap != null ? UserDataModel.fromMap(userDataMap) : null;
+
     setState(() {
-      userData = user;
+      userData = user; // Now 'userData' is of type 'UserDataModel?'
       isLoading = false;
     });
   }

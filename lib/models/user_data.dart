@@ -29,41 +29,41 @@ class UserDataModel {
     this.location,
   });
 
-  // JSON में कन्वर्ट करना
-  Map<String, dynamic> toJson() {
+  /// Convert Data in Map(JSON)
+  Map<String, dynamic> toMap() {
     return {
       "uid": uid,
-      "name": name,
-      "email": email,
-      "phoneNumber": phoneNumber,
-      "profilePicture": profilePicture,
-      "dob": dob,
-      "gender": gender,
-      "city": city,
-      "state": state,
-      "country": country,
-      "pinCode": pinCode,
-      "bloodGroup": bloodGroup,
-      "location": location,
+      "name": name ?? "",
+      "email": email ?? "",
+      "phoneNumber": phoneNumber ?? "",
+      "profilePicture": profilePicture ?? "",
+      "dob": dob ?? "",
+      "gender": gender ?? "",
+      "city": city ?? "",
+      "state": state ?? "",
+      "country": country ?? "",
+      "pinCode": pinCode ?? "",
+      "bloodGroup": bloodGroup ?? "",
+      "location": location ?? "",
     };
   }
 
-  // JSON से UserDataModel में कन्वर्ट करना
-  factory UserDataModel.fromJson(Map<String, dynamic> json) {
+  /// convert the data from Map(JSON) to UserDataModel
+  factory UserDataModel.fromMap(Map<String, dynamic> map) {
     return UserDataModel(
-      uid: json["uid"] ?? "",
-      name: json["name"],
-      email: json["email"],
-      phoneNumber: json["phoneNumber"],
-      profilePicture: json["profilePicture"],
-      dob: json["dob"],
-      gender: json["gender"],
-      city: json["city"],
-      state: json["state"],
-      country: json["country"],
-      pinCode: json["pinCode"],
-      bloodGroup: json["bloodGroup"],
-      location: json["location"],
+      uid: map["uid"] ?? "",
+      name: map["name"] as String?,
+      email: map["email"] as String?,
+      phoneNumber: map["phoneNumber"] as String?,
+      profilePicture: map["profilePicture"] as String?,
+      dob: map["dob"] as String?,
+      gender: map["gender"] as String?,
+      city: map["city"] as String?,
+      state: map["state"] as String?,
+      country: map["country"] as String?,
+      pinCode: map["pinCode"] as String?,
+      bloodGroup: map["bloodGroup"] as String?,
+      location: map["location"] as String?,
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rakt_daan/api/auth_repo.dart';
-import 'package:rakt_daan/api/google_sign_in.dart';
+import 'package:rakt_daan/components/appbar/custom_appbar.dart';
 import 'package:rakt_daan/components/buttons/primary_button.dart';
 import 'package:rakt_daan/components/progress%20indicator/custom_indicator.dart';
 import 'package:rakt_daan/components/selection%20input%20field/custom_dropdown.dart';
@@ -20,14 +20,14 @@ import 'package:rakt_daan/routes/routes.dart';
 import 'package:rakt_daan/utils/colors.dart';
 import 'package:rakt_daan/utils/image_const.dart';
 
-class AccountCreation extends StatefulWidget {
-  const AccountCreation({super.key});
+class UpdateProfile extends StatefulWidget {
+  const UpdateProfile({super.key});
 
   @override
-  State<AccountCreation> createState() => _AccountCreationState();
+  State<UpdateProfile> createState() => _UpdateProfileState();
 }
 
-class _AccountCreationState extends State<AccountCreation> {
+class _UpdateProfileState extends State<UpdateProfile> {
   List<String> bloodGroups = [
     'A+',
     'A-',
@@ -66,6 +66,10 @@ class _AccountCreationState extends State<AccountCreation> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorConst.darkGrey.withAlpha((0.5 * 255).round()),
+      appBar: CustomAppbar(
+          title: 'Update Profile',
+          defaultLeadingIcon: true,
+          traillingIcon: false),
       body: SafeArea(
         child: Container(
           height: double.infinity,
@@ -82,21 +86,12 @@ class _AccountCreationState extends State<AccountCreation> {
                 height: 60,
               ),
               Text(
-                "🩸 Let's Begin 🩸 ",
+                "🩸 Update Detail 🩸 ",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: ColorConst.primaryGreen,
                   fontSize: 30,
                   fontWeight: FontWeight.w600,
-                  height: 1.2,
-                ),
-              ),
-              Text(
-                'Create your account to start your journey',
-                style: TextStyle(
-                  color: ColorConst.lightGrey,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
                   height: 1.2,
                 ),
               ),
@@ -268,7 +263,7 @@ class _AccountCreationState extends State<AccountCreation> {
                             PrimaryButton(
                                 buttonWidth: Get.width * .9,
                                 buttonHeight: 50,
-                                buttonText: 'Submit',
+                                buttonText: 'Update',
                                 onTap: () async {
                                   if (emailController.text.isNotEmpty &&
                                       nameController.text.isNotEmpty &&
@@ -312,12 +307,12 @@ class _AccountCreationState extends State<AccountCreation> {
                                     LoadingDialog.hide(context);
 
                                     await AuthRepo()
-                                        .saveUserData(userDataModel);
+                                        .updateUserData(userDataModel);
                                     // for navigate to Home Screen
                                     Get.offAllNamed(AppRoutes.bottom);
                                     // For showing a snakbar to successfull login
                                     Get.snackbar("Success",
-                                        "User data saved successfully!",
+                                        "User data update successfully!",
                                         backgroundColor:
                                             ColorConst.sparentOverlay,
                                         colorText: ColorConst.primaryGreen);
@@ -347,8 +342,8 @@ class _AccountCreationState extends State<AccountCreation> {
 
 // for picked a autofilled values by login
   void setData() async {
-    var userData = await AuthService().getUser(); // Firebase से डेटा लाना
-
+    var userData = await AuthRepo()
+        .getUserData(AuthRepo.user.uid); // Firebase से डेटा लाना
     if (userData != null) {
       phoneController.text = userData["phoneNumber"] ?? "";
       emailController.text = userData["email"] ?? "";

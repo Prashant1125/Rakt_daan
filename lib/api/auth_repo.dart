@@ -42,18 +42,22 @@ class AuthRepo {
   }
 
   Future<void> saveUserData(UserDataModel user) async {
-    await fdb.ref("userInfo").child(user.uid).set(user.toJson());
+    await fdb.ref("userInfo").child(user.uid).set(user.toMap());
   }
 
   // 🔹 यूजर डेटा प्राप्त करें
-  Future<UserDataModel?> getUserData(String uid) async {
+  Future<Map<String, dynamic>?> getUserData(String uid) async {
     DataSnapshot snapshot = await fdb.ref("userInfo").child(user.uid).get();
 
     if (snapshot.exists && snapshot.value is Map) {
-      return UserDataModel.fromJson(
-          Map<String, dynamic>.from(snapshot.value as Map));
+      return Map<String, dynamic>.from(snapshot.value as Map);
     }
     return null;
+  }
+
+// for update an info of user
+  Future<void> updateUserData(UserDataModel user) async {
+    await fdb.ref("userInfo").child(user.uid).update(user.toMap());
   }
 
   static Future<void> checkUserAndNavigate() async {

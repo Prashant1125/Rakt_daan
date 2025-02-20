@@ -1,11 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rakt_daan/api/auth_repo.dart';
-import 'package:rakt_daan/api/google_sign_in.dart';
-import 'package:rakt_daan/components/buttons/primary_button.dart';
-import 'package:rakt_daan/routes/routes.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:rakt_daan/utils/colors.dart';
+import 'package:rakt_daan/utils/image_const.dart';
 
 class Homepage extends StatelessWidget {
   const Homepage({super.key});
@@ -13,28 +10,54 @@ class Homepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            PrimaryButton(
-                buttonWidth: Get.width * .5,
-                buttonHeight: 50,
-                buttonText: 'Log Out',
-                onTap: () {
-                  AuthService().signOut().then((value) {
-                    AuthRepo.auth = FirebaseAuth.instance;
-                    Get.snackbar('Success', 'Logout Successfully',
-                        backgroundColor: ColorConst.sparentOverlay
-                            .withAlpha((.5 * 255).round()),
-                        colorText: ColorConst.primaryGreen);
-                    Get.offAllNamed(AppRoutes.welcome);
-                  });
-                },
-                isEnabled: true)
-          ],
-        ),
-      ),
-    );
+        backgroundColor: ColorConst.darkGrey.withAlpha((0.9 * 255).round()),
+        body: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(ImageConst.background),
+                  fit: BoxFit.cover,
+                  opacity: .2)),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: Get.width * .45,
+                      width: Get.width * .45,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              ColorConst.darkGrey.withAlpha((.9 * 255).round()),
+                              Colors.red.shade700.withAlpha((.3 * 255).round()),
+                              Colors.red.shade300.withAlpha((.8 * 255).round()),
+                              ColorConst.darkGrey.withAlpha((.9 * 255).round()),
+                            ],
+                          )),
+                      child: Container(
+                          alignment: Alignment.center,
+                          height: 80,
+                          width: 80,
+                          decoration: BoxDecoration(
+                              color: Colors.red.shade100,
+                              borderRadius: BorderRadius.circular(50)),
+                          child: Text(
+                            'O+',
+                            style: TextStyle(fontSize: 20),
+                          )),
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
+        ));
   }
 }

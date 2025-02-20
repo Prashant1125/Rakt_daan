@@ -18,5 +18,5 @@ class ImageConst {
   static const String facebookCircle = 'assets/images/facebook.png';
   static const String github = 'assets/images/github.png';
   static const String linkdinCircular = 'assets/images/linkdin.png';
-  static const String contact_bg = 'assets/images/contactbg.png';
+  static const String contactBg = 'assets/images/contactbg.png';
 }

@@ -29,7 +29,9 @@ class SettingsContainer extends StatelessWidget {
                   leadingIcon: ImageConst.user,
                   text: 'Personal Details',
                   color: ColorConst.primaryBlue.withAlpha((0.3 * 255).round()),
-                  onTap: () {}),
+                  onTap: () {
+                    Get.toNamed(AppRoutes.update);
+                  }),
             ),
             SectionBreak(
               sectionTitle: 'Verification',

@@ -8,6 +8,7 @@ import 'package:rakt_daan/screens/login.dart';
 import 'package:rakt_daan/screens/profile.dart';
 import 'package:rakt_daan/screens/sign_up.dart';
 import 'package:rakt_daan/screens/splash.dart';
+import 'package:rakt_daan/screens/update_profile.dart';
 import 'package:rakt_daan/screens/welcome.dart';
 
 class AppRoutes {
@@ -47,6 +48,7 @@ class AppRoutes {
       ),
     ),
     GetPage(name: '/contact', page: () => ContactUs()),
+    GetPage(name: '/update', page: () => UpdateProfile()),
   ];
 
   // Route names as constants for easy reference
@@ -59,4 +61,5 @@ class AppRoutes {
   static const String home = '/home';
   static const String profile = '/profile';
   static const String contact = '/contact';
+  static const String update = '/update';
 }
