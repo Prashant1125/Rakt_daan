@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:rakt_daan/components/containers/blood_container.dart';
 import 'package:rakt_daan/utils/colors.dart';
 import 'package:rakt_daan/utils/image_const.dart';
 
@@ -17,46 +17,61 @@ class Homepage extends StatelessWidget {
                   image: AssetImage(ImageConst.background),
                   fit: BoxFit.cover,
                   opacity: .2)),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: Get.width * .45,
-                      width: Get.width * .45,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              ColorConst.darkGrey.withAlpha((.9 * 255).round()),
-                              Colors.red.shade700.withAlpha((.3 * 255).round()),
-                              Colors.red.shade300.withAlpha((.8 * 255).round()),
-                              ColorConst.darkGrey.withAlpha((.9 * 255).round()),
-                            ],
-                          )),
-                      child: Container(
-                          alignment: Alignment.center,
-                          height: 80,
-                          width: 80,
-                          decoration: BoxDecoration(
-                              color: Colors.red.shade100,
-                              borderRadius: BorderRadius.circular(50)),
-                          child: Text(
-                            'O+',
-                            style: TextStyle(fontSize: 20),
-                          )),
-                    ),
-                  )
-                ],
-              )
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                BloodContainer(
+                  positiveTitle: 'A+',
+                  nagetiveTitle: 'A-',
+                  negTap: () {
+                    Get.toNamed('/listview', arguments: {"bloodGroup": "A-"});
+                  },
+                  posTap: () {
+                    Get.toNamed('/listview', arguments: {"bloodGroup": "A+"});
+                  },
+                ),
+                BloodContainer(
+                  positiveTitle: 'B+',
+                  nagetiveTitle: 'B-',
+                  negTap: () {
+                    Get.toNamed('/listview', arguments: {"bloodGroup": "B-"});
+                  },
+                  posTap: () {
+                    Get.toNamed('/listview', arguments: {"bloodGroup": "B+"});
+                  },
+                ),
+                BloodContainer(
+                  positiveTitle: 'O+',
+                  nagetiveTitle: 'O-',
+                  negTap: () {
+                    Get.toNamed('/listview', arguments: {"bloodGroup": "O-"});
+                  },
+                  posTap: () {
+                    Get.toNamed('/listview', arguments: {"bloodGroup": "O+"});
+                  },
+                ),
+                BloodContainer(
+                  positiveTitle: 'AB+',
+                  nagetiveTitle: 'AB-',
+                  negTap: () {
+                    Get.toNamed('/listview', arguments: {"bloodGroup": "AB+"});
+                  },
+                  posTap: () {
+                    Get.toNamed('/listview', arguments: {"bloodGroup": "AB-"});
+                  },
+                ),
+                BloodContainer(
+                  width: Get.width * .92,
+                  positiveTitle: 'Not Specified',
+                  posTap: () {
+                    Get.toNamed('/listview',
+                        arguments: {"bloodGroup": "Not Specified"});
+                  },
+                ),
+              ],
+            ),
           ),
         ));
   }

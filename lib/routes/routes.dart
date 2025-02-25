@@ -4,6 +4,7 @@ import 'package:rakt_daan/screens/account_creation.dart';
 import 'package:rakt_daan/screens/bottom_bar.dart';
 import 'package:rakt_daan/screens/contact_us.dart';
 import 'package:rakt_daan/screens/homepage.dart';
+import 'package:rakt_daan/screens/listview.dart';
 import 'package:rakt_daan/screens/login.dart';
 import 'package:rakt_daan/screens/profile.dart';
 import 'package:rakt_daan/screens/sign_up.dart';
@@ -49,6 +50,7 @@ class AppRoutes {
     ),
     GetPage(name: '/contact', page: () => ContactUs()),
     GetPage(name: '/update', page: () => UpdateProfile()),
+    GetPage(name: '/listview', page: () => ListViewScreen()),
   ];
 
   // Route names as constants for easy reference
@@ -62,4 +64,5 @@ class AppRoutes {
   static const String profile = '/profile';
   static const String contact = '/contact';
   static const String update = '/update';
+  static const String listView = '/listview';
 }

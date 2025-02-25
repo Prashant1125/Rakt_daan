@@ -79,4 +79,29 @@ class AuthRepo {
       Get.offAllNamed(AppRoutes.accountCreation);
     }
   }
+
+  // for fetch all the user data
+  Future<List<UserDataModel>> fetchUsersByBloodGroup(String bloodGroup) async {
+    List<UserDataModel> userList = [];
+
+    try {
+      DatabaseEvent event = await fdb.ref('userInfo').once();
+      if (event.snapshot.value != null && event.snapshot.value is Map) {
+        Map<dynamic, dynamic> data = event.snapshot.value as Map;
+
+        data.forEach((key, value) {
+          UserDataModel user =
+              UserDataModel.fromMap(Map<String, dynamic>.from(value));
+
+          if (user.bloodGroup == bloodGroup) {
+            userList.add(user);
+          }
+        });
+      }
+    } catch (e) {
+      print("Error fetching users: $e");
+    }
+
+    return userList;
+  }
 }
