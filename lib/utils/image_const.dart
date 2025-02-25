@@ -19,4 +19,5 @@ class ImageConst {
   static const String github = 'assets/images/github.png';
   static const String linkdinCircular = 'assets/images/linkdin.png';
   static const String contactBg = 'assets/images/contactbg.png';
+  static const String whatshappIcon = 'assets/images/whatsappicon.png';
 }

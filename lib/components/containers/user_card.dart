@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:rakt_daan/components/containers/container.dart';
+import 'package:rakt_daan/models/user_data.dart';
+import 'package:rakt_daan/utils/image_const.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UserCard extends StatelessWidget {
-  final String name;
-  final String email;
-  final String bloodGroup;
+  final UserDataModel user;
 
-  UserCard({
-    required this.name,
-    required this.email,
-    required this.bloodGroup,
-  });
+  const UserCard({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +22,10 @@ class UserCard extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           gradient: LinearGradient(
-            colors: [Colors.redAccent.withOpacity(0.8), Colors.white],
+            colors: [
+              Colors.redAccent.withAlpha((.8 * 255).round()),
+              Colors.white,
+            ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -43,7 +44,7 @@ class UserCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    name,
+                    user.name ?? "No Name",
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -52,7 +53,39 @@ class UserCard extends StatelessWidget {
                   ),
                   SizedBox(height: 4),
                   Text(
-                    email,
+                    trimText(user.email ?? "No Email", 23),
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.black54,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    trimText(user.phoneNumber ?? "No number", 23),
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.black54,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Address: ${trimText(user.location ?? "No Address", 23)}',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.black54,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    '${trimText(user.city ?? "No City", 23)}, ${trimText(user.state ?? "No State", 23)}',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.black54,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    '${trimText(user.country ?? "No Country", 23)}, ${trimText(user.pinCode ?? "No Pin", 23)}',
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.black54,
@@ -66,7 +99,7 @@ class UserCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Text(
-                      "Blood Group: $bloodGroup",
+                      "Blood Group: ${user.bloodGroup ?? 'Unknown'}",
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
@@ -75,14 +108,40 @@ class UserCard extends StatelessWidget {
             ),
             Column(
               children: [
-                Icon(Icons.home),
-                Icon(Icons.home),
-                Icon(Icons.home),
+                CircularContainer(
+                  hieght: 50,
+                  width: 50,
+                  onTap: () {
+                    launchUrl(Uri.parse(user.phoneNumber.toString()));
+                  },
+                  icon: Icons.call,
+                  iconColor: Colors.deepOrange,
+                ),
+                SizedBox(height: 8),
+                CircularContainer(
+                  hieght: 50,
+                  width: 50,
+                  onTap: () {
+                    launchUrl(Uri.parse(user.email.toString()));
+                  },
+                  icon: Icons.email,
+                  iconColor: Colors.deepPurpleAccent,
+                ),
+                SizedBox(height: 8),
+                CircularContainer(
+                    hieght: 50,
+                    width: 50,
+                    onTap: () {},
+                    image: ImageConst.whatshappIcon),
               ],
-            )
+            ),
           ],
         ),
       ),
     );
+  }
+
+  String trimText(String text, int length) {
+    return text.length > length ? "${text.substring(0, length)}..." : text;
   }
 }

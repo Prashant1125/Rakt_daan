@@ -31,7 +31,10 @@ class BloodContainer extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               gradient: LinearGradient(
-                colors: [Colors.redAccent.withOpacity(0.8), Colors.white],
+                colors: [
+                  Colors.redAccent.withAlpha((.8 * 255).round()),
+                  Colors.white
+                ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),

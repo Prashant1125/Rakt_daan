@@ -99,7 +99,7 @@ class AuthRepo {
         });
       }
     } catch (e) {
-      print("Error fetching users: $e");
+      // print("Error fetching users: $e");
     }
 
     return userList;

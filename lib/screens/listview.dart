@@ -52,13 +52,7 @@ class ListViewScreen extends StatelessWidget {
             return ListView.builder(
               itemCount: users.length,
               itemBuilder: (context, index) {
-                UserDataModel user = users[index];
-
-                return UserCard(
-                  name: user.name ?? "No Name",
-                  email: user.email ?? "No Email",
-                  bloodGroup: user.bloodGroup ?? "Unknown",
-                );
+                return UserCard(user: users[index]);
               },
             );
           },

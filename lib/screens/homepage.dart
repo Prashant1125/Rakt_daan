@@ -72,12 +72,13 @@ class Homepage extends StatelessWidget {
                   },
                 ),
                 BloodContainer(
-                  width: Get.width * .92,
-                  positiveTitle: 'Others',
-                  posTap: () {
+                  nagetiveTitle: 'Others',
+                  negTap: () {
                     Get.toNamed(AppRoutes.listView,
                         arguments: {"bloodGroup": "Not Specified"});
                   },
+                  positiveTitle: 'See All',
+                  posTap: () {},
                 ),
               ],
             ),
