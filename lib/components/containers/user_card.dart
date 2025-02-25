@@ -112,7 +112,8 @@ class UserCard extends StatelessWidget {
                   hieght: 50,
                   width: 50,
                   onTap: () {
-                    launchUrl(Uri.parse(user.phoneNumber.toString()));
+                    final phoneNumber = user.phoneNumber.toString();
+                    launchUrl(Uri.parse("tel:$phoneNumber"));
                   },
                   icon: Icons.call,
                   iconColor: Colors.deepOrange,
@@ -122,7 +123,9 @@ class UserCard extends StatelessWidget {
                   hieght: 50,
                   width: 50,
                   onTap: () {
-                    launchUrl(Uri.parse(user.email.toString()));
+                    final email = user.email.toString();
+
+                    launchUrl(Uri.parse('mailto:$email'));
                   },
                   icon: Icons.email,
                   iconColor: Colors.deepPurpleAccent,
@@ -131,7 +134,10 @@ class UserCard extends StatelessWidget {
                 CircularContainer(
                     hieght: 50,
                     width: 50,
-                    onTap: () {},
+                    onTap: () {
+                      final messege = user.phoneNumber.toString();
+                      launchUrl(Uri.parse('sms:$messege'));
+                    },
                     image: ImageConst.whatshappIcon),
               ],
             ),

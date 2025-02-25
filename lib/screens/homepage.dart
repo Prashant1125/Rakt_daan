@@ -64,11 +64,11 @@ class Homepage extends StatelessWidget {
                   nagetiveTitle: 'AB-',
                   negTap: () {
                     Get.toNamed(AppRoutes.listView,
-                        arguments: {"bloodGroup": "AB+"});
+                        arguments: {"bloodGroup": "AB-"});
                   },
                   posTap: () {
                     Get.toNamed(AppRoutes.listView,
-                        arguments: {"bloodGroup": "AB-"});
+                        arguments: {"bloodGroup": "AB+"});
                   },
                 ),
                 BloodContainer(
@@ -78,7 +78,10 @@ class Homepage extends StatelessWidget {
                         arguments: {"bloodGroup": "Not Specified"});
                   },
                   positiveTitle: 'See All',
-                  posTap: () {},
+                  posTap: () {
+                    Get.toNamed(AppRoutes.listView,
+                        arguments: {"bloodGroup": "All"});
+                  },
                 ),
               ],
             ),

@@ -81,7 +81,8 @@ class AuthRepo {
   }
 
   // for fetch all the user data
-  Future<List<UserDataModel>> fetchUsersByBloodGroup(String bloodGroup) async {
+  Future<List<UserDataModel>> fetchUsersByBloodGroup(
+      [String? bloodGroup]) async {
     List<UserDataModel> userList = [];
 
     try {
@@ -93,13 +94,14 @@ class AuthRepo {
           UserDataModel user =
               UserDataModel.fromMap(Map<String, dynamic>.from(value));
 
-          if (user.bloodGroup == bloodGroup) {
+          // ✅ अगर bloodGroup null है, तो सभी यूज़र्स दिखाएंगे
+          if (bloodGroup == null || user.bloodGroup == bloodGroup) {
             userList.add(user);
           }
         });
       }
     } catch (e) {
-      // print("Error fetching users: $e");
+      print("Error fetching users: $e");
     }
 
     return userList;
