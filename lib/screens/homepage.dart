@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rakt_daan/components/containers/blood_container.dart';
+import 'package:rakt_daan/routes/routes.dart';
 import 'package:rakt_daan/utils/colors.dart';
 import 'package:rakt_daan/utils/image_const.dart';
 
@@ -26,47 +27,55 @@ class Homepage extends StatelessWidget {
                   positiveTitle: 'A+',
                   nagetiveTitle: 'A-',
                   negTap: () {
-                    Get.toNamed('/listview', arguments: {"bloodGroup": "A-"});
+                    Get.toNamed(AppRoutes.listView,
+                        arguments: {"bloodGroup": "A-"});
                   },
                   posTap: () {
-                    Get.toNamed('/listview', arguments: {"bloodGroup": "A+"});
+                    Get.toNamed(AppRoutes.listView,
+                        arguments: {"bloodGroup": "A+"});
                   },
                 ),
                 BloodContainer(
                   positiveTitle: 'B+',
                   nagetiveTitle: 'B-',
                   negTap: () {
-                    Get.toNamed('/listview', arguments: {"bloodGroup": "B-"});
+                    Get.toNamed(AppRoutes.listView,
+                        arguments: {"bloodGroup": "B-"});
                   },
                   posTap: () {
-                    Get.toNamed('/listview', arguments: {"bloodGroup": "B+"});
+                    Get.toNamed(AppRoutes.listView,
+                        arguments: {"bloodGroup": "B+"});
                   },
                 ),
                 BloodContainer(
                   positiveTitle: 'O+',
                   nagetiveTitle: 'O-',
                   negTap: () {
-                    Get.toNamed('/listview', arguments: {"bloodGroup": "O-"});
+                    Get.toNamed(AppRoutes.listView,
+                        arguments: {"bloodGroup": "O-"});
                   },
                   posTap: () {
-                    Get.toNamed('/listview', arguments: {"bloodGroup": "O+"});
+                    Get.toNamed(AppRoutes.listView,
+                        arguments: {"bloodGroup": "O+"});
                   },
                 ),
                 BloodContainer(
                   positiveTitle: 'AB+',
                   nagetiveTitle: 'AB-',
                   negTap: () {
-                    Get.toNamed('/listview', arguments: {"bloodGroup": "AB+"});
+                    Get.toNamed(AppRoutes.listView,
+                        arguments: {"bloodGroup": "AB+"});
                   },
                   posTap: () {
-                    Get.toNamed('/listview', arguments: {"bloodGroup": "AB-"});
+                    Get.toNamed(AppRoutes.listView,
+                        arguments: {"bloodGroup": "AB-"});
                   },
                 ),
                 BloodContainer(
                   width: Get.width * .92,
-                  positiveTitle: 'Not Specified',
+                  positiveTitle: 'Others',
                   posTap: () {
-                    Get.toNamed('/listview',
+                    Get.toNamed(AppRoutes.listView,
                         arguments: {"bloodGroup": "Not Specified"});
                   },
                 ),

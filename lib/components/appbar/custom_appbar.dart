@@ -39,10 +39,11 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                 defaultLeadingIcon
                     ? InkWell(
                         child: Padding(
-                          padding: EdgeInsets.only(
-                              left: screenWidth * (22 / 360),
-                              right: screenWidth * (20 / 360)),
-                          child: Image.asset(ImageConst.backButton),
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                              width: 35,
+                              color: Colors.transparent,
+                              child: Image.asset(ImageConst.backButton)),
                         ),
                         onTap: () {
                           Get.back();

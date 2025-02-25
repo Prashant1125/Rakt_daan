@@ -25,27 +25,30 @@ class BloodContainer extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
-            // alignment: Alignment.center,
+            alignment: Alignment.center,
             height: Get.width * .45,
             width: nagetiveTitle == null ? width : Get.width * .45,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    ColorConst.primaryBlue.withAlpha((.9 * 255).round()),
-                    Colors.red.shade700.withAlpha((.3 * 255).round()),
-                    Colors.red.shade300.withAlpha((.8 * 255).round()),
-                    ColorConst.primaryBlue.withAlpha((.9 * 255).round()),
-                  ],
-                )),
+              borderRadius: BorderRadius.circular(10),
+              gradient: LinearGradient(
+                colors: [Colors.redAccent.withOpacity(0.8), Colors.white],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 10,
+                  offset: Offset(4, 4),
+                ),
+              ],
+            ),
             child: InkWell(
               onTap: posTap,
               child: Container(
                   alignment: Alignment.center,
-                  height: 80,
-                  width: 80,
+                  height: 95,
+                  width: 95,
                   decoration: BoxDecoration(
                       color: ColorConst.sparentOverlay
                           .withAlpha((.3 * 255).round()),
@@ -56,7 +59,7 @@ class BloodContainer extends StatelessWidget {
                     positiveTitle,
                     style: TextStyle(
                         fontSize: 25,
-                        color: ColorConst.primaryGreen,
+                        color: ColorConst.pureBlack,
                         fontWeight: FontWeight.bold),
                   )),
             ),
@@ -71,6 +74,7 @@ class BloodContainer extends StatelessWidget {
                 : InkWell(
                     onTap: negTap,
                     child: Container(
+                      alignment: Alignment.center,
                       height: Get.width * .45,
                       width: Get.width * .45,
                       decoration: BoxDecoration(
@@ -89,8 +93,8 @@ class BloodContainer extends StatelessWidget {
                           )),
                       child: Container(
                           alignment: Alignment.center,
-                          height: 80,
-                          width: 80,
+                          height: 90,
+                          width: 90,
                           decoration: BoxDecoration(
                               color: ColorConst.sparentOverlay
                                   .withAlpha((.3 * 255).round()),
