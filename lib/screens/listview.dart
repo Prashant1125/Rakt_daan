@@ -63,7 +63,11 @@ class _ListViewScreenState extends State<ListViewScreen> {
             }
 
             if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return Center(child: Text("No donors found for $bloodGroup"));
+              return Center(
+                  child: Text(
+                "No donors found for $bloodGroup",
+                style: TextStyle(fontSize: 20, color: ColorConst.primaryGreen),
+              ));
             }
 
             List<UserDataModel> users = snapshot.data!;
@@ -80,12 +84,12 @@ class _ListViewScreenState extends State<ListViewScreen> {
     );
   }
 
-  /// ✅ API से डाटा लाने का सही तरीका (अब "See All" के लिए null भेजेंगे)
+//for fetch all users
   Future<List<UserDataModel>> _fetchUsers(String? bloodGroup) async {
     try {
       return await AuthRepo().fetchUsersByBloodGroup(bloodGroup);
     } catch (e) {
-      print("Error fetching users: $e");
+      // print("Error fetching users: $e");
       return [];
     }
   }

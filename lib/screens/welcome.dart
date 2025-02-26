@@ -34,7 +34,7 @@ class WelcomeScreen extends StatelessWidget {
                   height: 60,
                 ),
                 Text(
-                  '🩸 Rakt Daan 🩸 ',
+                  '🩸 Donor Pulse 🩸 ',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: ColorConst.primaryGreen,
@@ -220,10 +220,8 @@ class WelcomeScreen extends StatelessWidget {
         userDataMap != null ? UserDataModel.fromMap(userDataMap) : null;
 
     if (user != null) {
-      // ✅ यूजर का डेटा मिल गया, डायरेक्ट होमपेज पर भेजें
       Get.offAllNamed(AppRoutes.bottom);
     } else {
-      // ❌ यूजर का डेटा नहीं मिला, फॉर्म दिखाएँ
       Get.snackbar("Info", "User data not found, please sign up",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.orange,
