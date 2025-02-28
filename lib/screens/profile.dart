@@ -123,8 +123,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
                 Text(
-                  userData?.name.toString() ??
-                      AuthRepo.auth.currentUser?.displayName.toString() ??
+                  userData?.name ??
+                      AuthRepo.auth.currentUser?.displayName ??
                       '',
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -140,7 +140,11 @@ class _ProfilePageState extends State<ProfilePage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      AuthRepo.auth.currentUser?.email.toString() ?? '',
+                      trimText(
+                          userData?.email ??
+                              AuthRepo.auth.currentUser?.email ??
+                              '',
+                          20),
                       style: TextStyle(
                         color: ColorConst.pureWhite,
                         fontSize: 15,
@@ -210,5 +214,9 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ),
     );
+  }
+
+  String trimText(String text, int length) {
+    return text.length > length ? "${text.substring(0, length)}..." : text;
   }
 }

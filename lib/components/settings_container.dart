@@ -44,10 +44,14 @@ class SettingsContainer extends StatelessWidget {
                   LoadingDialog.show(context);
                   AuthRepo.auth.currentUser
                       ?.sendEmailVerification()
+                      .onError(
+                        (error, stackTrace) => LoadingDialog.hide(context),
+                      )
                       .then((value) {
                     LoadingDialog.hide(context);
 
                     AuthRepo.auth.currentUser?.reload();
+
                     return Get.snackbar("Verification link sent successfully!",
                         'Cheak your email & verify',
                         backgroundColor: ColorConst.sparentOverlay
