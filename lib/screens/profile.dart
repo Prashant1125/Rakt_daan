@@ -106,7 +106,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           width: Get.width * .25,
                           height: Get.width * .25,
                           fit: BoxFit.contain,
-                          imageUrl: userData?.profilePicture ?? "",
+                          imageUrl: userData?.profilePicture ??
+                              AuthRepo.auth.currentUser?.photoURL ??
+                              "",
                           errorWidget: (context, url, error) =>
                               const CircleAvatar(
                             backgroundColor: Colors.black12,
@@ -121,7 +123,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
                 Text(
-                  userData?.name.toString() ?? '',
+                  userData?.name.toString() ??
+                      AuthRepo.auth.currentUser?.displayName.toString() ??
+                      '',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: ColorConst.pureWhite,
