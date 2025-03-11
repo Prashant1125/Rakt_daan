@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:rakt_daan/api/auth_repo.dart';
 import 'package:rakt_daan/components/appbar/custom_appbar.dart';
 import 'package:rakt_daan/components/containers/user_card.dart';
-import 'package:rakt_daan/components/progress%20indicator/custom_indicator.dart';
 import 'package:rakt_daan/models/user_data.dart';
 import 'package:rakt_daan/utils/colors.dart';
 import 'package:rakt_daan/utils/image_const.dart';
@@ -17,18 +16,52 @@ class ListViewScreen extends StatefulWidget {
 
 class _ListViewScreenState extends State<ListViewScreen> {
   late String bloodGroup;
-  late Future<List<UserDataModel>> futureUsers;
+  List<UserDataModel> allUsers = [];
+  List<UserDataModel> filteredUsers = [];
+  TextEditingController searchController = TextEditingController();
+  bool isLoading = true; // ✅ Loading State
 
   @override
   void initState() {
     super.initState();
     final Map<String, dynamic> args = Get.arguments ?? {};
-
-    // ✅ "See All" पर क्लिक करने पर "All" दिखाएँ लेकिन API में null भेजें
     bloodGroup = args["bloodGroup"] ?? "All";
-    String? queryBloodGroup = (bloodGroup == "All") ? null : bloodGroup;
+    _fetchUsers(bloodGroup);
+  }
 
-    futureUsers = _fetchUsers(queryBloodGroup);
+  Future<void> _fetchUsers(String bloodGroup) async {
+    setState(() => isLoading = true);
+
+    try {
+      List<UserDataModel> users = await AuthRepo()
+          .fetchUsersByBloodGroup(bloodGroup == "All" ? null : bloodGroup);
+
+      setState(() {
+        allUsers = users;
+        filteredUsers = users;
+      });
+    } catch (e) {
+      // print("Error fetching users: $e");
+    } finally {
+      setState(() => isLoading = false);
+    }
+  }
+
+  void _filterUsers(String query) {
+    setState(() {
+      if (query.isEmpty) {
+        filteredUsers = allUsers; // ✅ Reset if empty
+      } else {
+        filteredUsers = allUsers.where((user) {
+          final city = user.city?.toLowerCase() ?? '';
+          final state = user.state?.toLowerCase() ?? ''; // ✅ State Check
+          final searchText = query.toLowerCase();
+
+          return city.contains(searchText) ||
+              state.contains(searchText); // ✅ City + State Filter
+        }).toList();
+      }
+    });
   }
 
   @override
@@ -36,7 +69,7 @@ class _ListViewScreenState extends State<ListViewScreen> {
     return Scaffold(
       backgroundColor: ColorConst.darkGrey.withAlpha((0.9 * 255).round()),
       appBar: CustomAppbar(
-        title: '$bloodGroup Donors', // ✅ Dynamic AppBar Title
+        title: '$bloodGroup Donors',
         defaultLeadingIcon: true,
         traillingIcon: false,
       ),
@@ -48,63 +81,45 @@ class _ListViewScreenState extends State<ListViewScreen> {
             opacity: .2,
           ),
         ),
-        child: FutureBuilder<List<UserDataModel>>(
-          future: futureUsers,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              _showLoadingDialog();
-              return const SizedBox();
-            } else {
-              _hideLoadingDialog();
-            }
-
-            if (snapshot.hasError) {
-              return Center(child: Text("Error: ${snapshot.error}"));
-            }
-
-            if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return Center(
-                  child: Text(
-                "No donors found for $bloodGroup",
-                style: TextStyle(fontSize: 20, color: ColorConst.primaryGreen),
-              ));
-            }
-
-            List<UserDataModel> users = snapshot.data!;
-
-            return ListView.builder(
-              itemCount: users.length,
-              itemBuilder: (context, index) {
-                return UserCard(user: users[index]);
-              },
-            );
-          },
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: searchController,
+                decoration: InputDecoration(
+                  hintText: "Search by City or State...",
+                  prefixIcon: Icon(Icons.search),
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide.none),
+                ),
+                onChanged: _filterUsers, // ✅ Updated Filter
+              ),
+            ),
+            Expanded(
+              child: isLoading
+                  ? Center(child: CircularProgressIndicator()) // ✅ Loader
+                  : filteredUsers.isEmpty
+                      ? Center(
+                          child: Text(
+                            "No donors found for $bloodGroup",
+                            style: TextStyle(
+                                fontSize: 20, color: ColorConst.primaryGreen),
+                          ),
+                        )
+                      : ListView.builder(
+                          itemCount: filteredUsers.length,
+                          itemBuilder: (context, index) {
+                            return UserCard(user: filteredUsers[index]);
+                          },
+                        ),
+            ),
+          ],
         ),
       ),
     );
-  }
-
-//for fetch all users
-  Future<List<UserDataModel>> _fetchUsers(String? bloodGroup) async {
-    try {
-      return await AuthRepo().fetchUsersByBloodGroup(bloodGroup);
-    } catch (e) {
-      // print("Error fetching users: $e");
-      return [];
-    }
-  }
-
-  /// ✅ सही तरीके से Loading Dialog दिखाएँ
-  void _showLoadingDialog() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) LoadingDialog.show(context);
-    });
-  }
-
-  /// ✅ सही तरीके से Loading Dialog छिपाएँ
-  void _hideLoadingDialog() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) LoadingDialog.hide(context);
-    });
   }
 }

@@ -14,7 +14,8 @@ class TextInputField extends StatelessWidget {
       this.width,
       this.suffixIcon,
       this.validator,
-      this.obscureText});
+      this.obscureText,
+      this.onChanged});
 
   final TextEditingController textEditingController;
   final String hintText;
@@ -23,6 +24,7 @@ class TextInputField extends StatelessWidget {
   final bool enabled;
   final double? width;
   final String? Function(String?)? validator;
+  final Function(String)? onChanged;
   final Widget? suffixIcon;
   final bool? obscureText;
   final _textInputFieldController = Get.put(TextInputFieldController());
@@ -121,6 +123,7 @@ class TextInputField extends StatelessWidget {
                             _textInputFieldController
                                 .requestFocus(uniqueTextInputFieldId);
                           },
+                          onChanged: onChanged,
                         ),
                       ),
                     ),

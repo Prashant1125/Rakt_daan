@@ -84,19 +84,19 @@ class AuthRepo {
   Future<List<UserDataModel>> fetchUsersByBloodGroup(
       [String? bloodGroup]) async {
     List<UserDataModel> userList = [];
-
     try {
       DatabaseEvent event = await fdb.ref('userInfo').once();
       if (event.snapshot.value != null && event.snapshot.value is Map) {
-        Map<dynamic, dynamic> data = event.snapshot.value as Map;
+        Map<dynamic, dynamic> data = Map.from(event.snapshot.value as Map);
 
         data.forEach((key, value) {
-          UserDataModel user =
-              UserDataModel.fromMap(Map<String, dynamic>.from(value));
+          if (value is Map) {
+            UserDataModel user =
+                UserDataModel.fromMap(Map<String, dynamic>.from(value));
 
-          // ✅ अगर bloodGroup null है, तो सभी यूज़र्स दिखाएंगे
-          if (bloodGroup == null || user.bloodGroup == bloodGroup) {
-            userList.add(user);
+            if (bloodGroup == null || user.bloodGroup == bloodGroup) {
+              userList.add(user);
+            }
           }
         });
       }
