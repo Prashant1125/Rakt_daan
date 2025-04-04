@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:rakt_daan/api/auth_repo.dart';
 import 'package:rakt_daan/components/appbar/custom_appbar.dart';
 import 'package:rakt_daan/components/buttons/primary_button.dart';
+import 'package:rakt_daan/components/image/profile_pic.dart';
 import 'package:rakt_daan/components/progress%20indicator/custom_indicator.dart';
 import 'package:rakt_daan/components/selection%20input%20field/custom_dropdown.dart';
 import 'package:rakt_daan/components/selection%20input%20field/date_input.dart';
@@ -122,6 +123,22 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                'Profile Picture',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  height: 1.0,
+                                  color: ColorConst.pureWhite,
+                                ),
+                              ),
+                            ),
+                            UploadFileSmallSingle(),
+                            const SizedBox(
+                              height: 10,
+                            ),
                             TextInputField(
                                 validator: (value) {
                                   return null;

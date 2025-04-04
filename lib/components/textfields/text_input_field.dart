@@ -68,7 +68,7 @@ class TextInputField extends StatelessWidget {
                 ? AnimatedContainer(
                     duration: const Duration(milliseconds: 200),
                     width: width ?? screenWidth * (350 / 360),
-                    height: screenHeight * (45 / 800),
+                    height: screenHeight * (45 / 700),
                     decoration: BoxDecoration(
                       color: focusedOrNot
                           ? Colors.transparent
@@ -108,9 +108,9 @@ class TextInputField extends StatelessWidget {
                             hintText: focusedOrNot ? '' : hintText,
                             border: InputBorder.none,
                             contentPadding: EdgeInsets.only(
-                              bottom: focusedOrNot ? 13 : 14,
+                              bottom: focusedOrNot ? 15 : 15,
                               left: focusedOrNot ? 19 : 20,
-                              top: 12,
+                              top: 8,
                               right: 20,
                             ),
                           ),

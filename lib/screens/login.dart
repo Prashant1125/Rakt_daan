@@ -193,6 +193,24 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: InkWell(
+                    onTap: () {
+                      showForgetPasswordDialog(context, emailController);
+                    },
+                    child: Text(
+                      'Forget Password',
+                      style: TextStyle(
+                          fontSize: 15,
+                          color: ColorConst.lightGrey,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 20,
@@ -232,5 +250,51 @@ class LoginScreen extends StatelessWidget {
         ),
       )),
     );
+  }
+
+  void showForgetPasswordDialog(
+      BuildContext ctx, TextEditingController emailController) {
+    showDialog(
+        context: ctx,
+        builder: (ctx) => AlertDialog(
+            backgroundColor: ColorConst.pureBlack.withAlpha((.5 * 255).round()),
+            title: Text(
+              'Forget Password',
+              style: TextStyle(color: ColorConst.pureWhite),
+            ),
+            actions: [
+              Align(
+                alignment: Alignment.center,
+                child: PrimaryButton(
+                    buttonWidth: Get.width * .5,
+                    buttonHeight: 50,
+                    buttonText: 'Submit',
+                    onTap: () {
+                      AuthRepo.auth
+                          .sendPasswordResetEmail(email: emailController.text)
+                          .then((value) => Get.snackbar('Success',
+                              "Reset link sent successfully to your email ${emailController.text}",
+                              backgroundColor: ColorConst.sparentOverlay
+                                  .withAlpha((.5 * 255).round()),
+                              colorText: ColorConst.primaryGreen))
+                          .onError((error, stackTrace) => Get.snackbar(
+                              'Error', '$error',
+                              backgroundColor: ColorConst.sparentOverlay
+                                  .withAlpha((.5 * 255).round()),
+                              colorText: ColorConst.primaryGreen));
+                      Get.back();
+                    },
+                    isEnabled: true),
+              )
+            ],
+            content: SizedBox(
+              height: Get.width * .25,
+              child: TextInputField(
+                  enabled: true,
+                  textEditingController: emailController,
+                  hintText: 'Enter Email',
+                  uniqueTextInputFieldId: 'Enter Email',
+                  title: 'Email'),
+            )));
   }
 }
