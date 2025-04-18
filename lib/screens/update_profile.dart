@@ -17,7 +17,6 @@ import 'package:rakt_daan/controllers/selection%20input%20controller/date_input_
 import 'package:rakt_daan/controllers/selection%20input%20controller/location_input_controller.dart';
 import 'package:rakt_daan/controllers/selection%20input%20controller/redio_button_controller.dart';
 import 'package:rakt_daan/models/user_data.dart';
-import 'package:rakt_daan/routes/routes.dart';
 import 'package:rakt_daan/utils/colors.dart';
 import 'package:rakt_daan/utils/image_const.dart';
 
@@ -326,12 +325,14 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                     await AuthRepo()
                                         .updateUserData(userDataModel);
                                     // for navigate to Home Screen
-                                    Get.offAllNamed(AppRoutes.bottom);
+                                    Get.back();
+                                    // Get.offAllNamed(AppRoutes.bottom);
                                     // For showing a snakbar to successfull login
                                     Get.snackbar("Success",
                                         "User data update successfully!",
-                                        backgroundColor:
-                                            ColorConst.sparentOverlay,
+                                        backgroundColor: ColorConst
+                                            .sparentOverlay
+                                            .withAlpha((.5 * 255).round()),
                                         colorText: ColorConst.primaryGreen);
                                   } else {
                                     Get.snackbar(

@@ -81,7 +81,7 @@ class SignUpScreen extends StatelessWidget {
               ),
               SizedBox(
                 width: Get.width * 95,
-                height: Get.height * .5,
+                height: Get.height * .52,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Card(
@@ -231,7 +231,7 @@ class SignUpScreen extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      Get.toNamed(AppRoutes.login);
+                      Get.offAndToNamed(AppRoutes.login);
                     },
                     child: Text(
                       'Login',

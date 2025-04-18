@@ -233,7 +233,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      Get.toNamed(AppRoutes.signUp);
+                      Get.offAndToNamed(AppRoutes.signUp);
                     },
                     child: Text(
                       'SignUp',
