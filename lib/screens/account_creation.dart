@@ -152,9 +152,6 @@ class _AccountCreationState extends State<AccountCreation> {
                               height: 14,
                             ),
                             ContactInputField(
-                              validator: (value) {
-                                return null;
-                              },
                               textEditingController: phoneController,
                               hintText: 'XXXXX-XXXXX',
                               uniqueTextInputFieldId: "Manager_Contact",
@@ -285,42 +282,58 @@ class _AccountCreationState extends State<AccountCreation> {
                                       stateController.text.isNotEmpty &&
                                       countryController.text.isNotEmpty &&
                                       pinController.text.isNotEmpty) {
-                                    //for showing a indicator
-                                    LoadingDialog.show(context);
+                                    if (contactNumberValidator(
+                                        phoneController.text)) {
+                                      //for showing a indicator
+                                      LoadingDialog.show(context);
 
-                                    // for model
+                                      // for model
 
-                                    UserDataModel userDataModel = UserDataModel(
-                                        uid: AuthRepo.user.uid,
-                                        profilePicture: AuthRepo.user.photoURL,
-                                        name: nameController.text,
-                                        email: emailController.text,
-                                        phoneNumber: phoneController.text,
-                                        dob: datecontroller
-                                            .textEditingController.text,
-                                        gender:
-                                            genderController.selectedItem.value,
-                                        city: cityController.text,
-                                        state: stateController.text,
-                                        country: countryController.text,
-                                        pinCode: pinController.text,
-                                        bloodGroup: dropdownController
-                                            .roleSelected.value,
-                                        location: locationInputController
-                                            .textEditingController.text);
+                                      UserDataModel userDataModel =
+                                          UserDataModel(
+                                              uid: AuthRepo.user.uid,
+                                              profilePicture: AuthRepo
+                                                  .user.photoURL,
+                                              name: nameController.text,
+                                              email: emailController.text,
+                                              phoneNumber: phoneController.text,
+                                              dob:
+                                                  datecontroller
+                                                      .textEditingController
+                                                      .text,
+                                              gender:
+                                                  genderController
+                                                      .selectedItem.value,
+                                              city: cityController.text,
+                                              state: stateController.text,
+                                              country: countryController.text,
+                                              pinCode: pinController.text,
+                                              bloodGroup:
+                                                  dropdownController
+                                                      .roleSelected.value,
+                                              location: locationInputController
+                                                  .textEditingController.text);
 // for hide the indicator
-                                    LoadingDialog.hide(context);
+                                      LoadingDialog.hide(context);
 
-                                    await AuthRepo()
-                                        .saveUserData(userDataModel);
-                                    // for navigate to Home Screen
-                                    Get.offAllNamed(AppRoutes.bottom);
-                                    // For showing a snakbar to successfull login
-                                    Get.snackbar("Success",
-                                        "User data saved successfully!",
-                                        backgroundColor:
-                                            ColorConst.sparentOverlay,
-                                        colorText: ColorConst.primaryGreen);
+                                      await AuthRepo()
+                                          .saveUserData(userDataModel);
+                                      // for navigate to Home Screen
+                                      Get.offAllNamed(AppRoutes.bottom);
+                                      // For showing a snakbar to successfull login
+                                      Get.snackbar("Success",
+                                          "User data saved successfully!",
+                                          backgroundColor:
+                                              ColorConst.sparentOverlay,
+                                          colorText: ColorConst.primaryGreen);
+                                    } else {
+                                      Get.snackbar(
+                                          'Error', 'Incorrect phone number',
+                                          backgroundColor: ColorConst
+                                              .sparentOverlay
+                                              .withAlpha((.5 * 255).round()),
+                                          colorText: ColorConst.primaryGreen);
+                                    }
                                   } else {
                                     Get.snackbar(
                                         'Error', 'Please fill all the fields',

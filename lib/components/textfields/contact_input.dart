@@ -3,6 +3,26 @@ import 'package:get/get.dart';
 import 'package:rakt_daan/controllers/text_input_field_controller.dart';
 import 'package:rakt_daan/utils/colors.dart';
 
+/// Validator function to ensure phone number starts with 9, 8, 7, or 6 and is exactly 10 digits.
+bool contactNumberValidator(String? value) {
+  if (value == null || value.isEmpty) {
+    return false;
+  }
+
+  final cleanedValue = value.replaceAll('-', '');
+
+  if (cleanedValue.length != 10) {
+    return false;
+  }
+
+  final firstDigit = cleanedValue[0];
+  if (!['9', '8', '7', '6'].contains(firstDigit)) {
+    return false;
+  }
+
+  return true; // Valid input
+}
+
 class ContactInputField extends StatefulWidget {
   const ContactInputField({
     super.key,
@@ -28,7 +48,7 @@ class ContactInputField extends StatefulWidget {
 
 class _ContactInputFieldState extends State<ContactInputField> {
   final _textInputFieldController = Get.put(TextInputFieldController());
-  final RxBool _isEmpty = true.obs; // Tracks whether the field is empty.
+  final RxBool _isEmpty = true.obs;
 
   @override
   void initState() {
@@ -79,8 +99,6 @@ class _ContactInputFieldState extends State<ContactInputField> {
               if (widget.enabled) {
                 _textInputFieldController
                     .requestFocus(widget.uniqueTextInputFieldId);
-              } else {
-                // print('it is false**********************************');
               }
             },
             child: widget.enabled
@@ -95,11 +113,10 @@ class _ContactInputFieldState extends State<ContactInputField> {
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(
                         color: _isEmpty.value
-                            ? ColorConst.sparentOverlay // Red border when empty
+                            ? ColorConst.sparentOverlay
                             : (focusedOrNot
-                                ? ColorConst
-                                    .primaryGreen // Green border when focused
-                                : Colors.transparent), // Default border
+                                ? ColorConst.primaryGreen
+                                : Colors.transparent),
                         width: 1.5,
                       ),
                     ),
@@ -116,7 +133,7 @@ class _ContactInputFieldState extends State<ContactInputField> {
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: TextFormField(
-                          validator: widget.validator,
+                          // validator: contactNumberValidator,
                           keyboardType: TextInputType.number,
                           cursorColor: ColorConst.pureWhite,
                           cursorHeight: 15,
@@ -158,7 +175,7 @@ class _ContactInputFieldState extends State<ContactInputField> {
                         color: ColorConst.darkBlue,
                       ),
                       child: TextFormField(
-                        validator: widget.validator,
+                        // validator: contactNumberValidator,
                         enabled: false,
                         cursorColor: Colors.white10,
                         cursorHeight: 6,
