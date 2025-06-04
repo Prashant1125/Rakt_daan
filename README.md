@@ -8,8 +8,7 @@ Donor Pulse ek Flutter mobile app hai jo blood donation ko aasaan aur effective 
 
 - User Authentication (Email/Google Sign-In)
 - Nearby Donor Search with filters (Blood Group, Location)
-- Donation History Tracker
-- Real-time Notifications for urgent requests
+- Real-time Calling/messeging for urgent requests
 - Admin Panel for managing donation drives
 - Clean and responsive UI with Flutter and GetX
 
