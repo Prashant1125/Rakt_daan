@@ -21,7 +21,6 @@ Donor Pulse ek Flutter mobile app hai jo blood donation ko aasaan aur effective 
 - Firebase Authentication
 - Firebase Realtime Database
 - GetX for State Management
-- Google Maps API (for location-based search)
 
 
 ## Demo Video
